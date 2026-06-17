@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "material-symbols/outlined.css";
 import "./globals.css";
 import { ThemeProvider } from "@/shared/components/ThemeProvider";
@@ -10,9 +10,20 @@ import { RuntimeI18nProvider } from "@/i18n/RuntimeI18nProvider";
 // Hook console immediately at module load time (server-side only, runs once)
 initConsoleLogCapture();
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const inter = localFont({
+    // 通过数组配置，同时支持正常体和斜体
+    src: [
+        {
+            path: "../fonts/inter/InterVariable.woff2",
+            style: "normal",
+        },
+        {
+            path: "../fonts/inter/InterVariable-Italic.woff2",
+            style: "italic",
+        },
+    ],
+    variable: "--font-inter", // 保持 CSS 变量名不变，完美兼容 Tailwind
+    display: "swap",
 });
 
 export const metadata = {
